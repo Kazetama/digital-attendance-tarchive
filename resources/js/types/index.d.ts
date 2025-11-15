@@ -41,3 +41,16 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+interface Student {
+    id: number;
+    uid_card: string;
+    name: string;
+    email: string;
+    class: string;
+    major: string;
+    parent_phone: string;
+    address: string;
+    image?: string;
+    is_active: boolean;
+}

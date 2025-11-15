@@ -54,3 +54,4 @@ interface Student {
     image?: string;
     is_active: boolean;
 }
+

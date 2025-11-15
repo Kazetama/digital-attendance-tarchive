@@ -20,4 +20,9 @@ class Student extends Model
         'email',
         'is_active',
     ];
+
+    public function attendanceLogs()
+    {
+        return $this->hasMany(AttendanceLog::class);
+    }
 }

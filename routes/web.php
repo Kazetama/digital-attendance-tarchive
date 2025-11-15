@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\Admin\DataStudentController;
+use App\Http\Controllers\Admin\AttendanceSettingController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [

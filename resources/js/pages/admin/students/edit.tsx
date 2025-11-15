@@ -18,9 +18,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Edit({ student }: Props) {
     const { data, setData, put, processing, errors } = useForm({
         uid_card: student.uid_card || "",
+        nisn: student.nisn || "",
         name: student.name || "",
         image: student.image || "",
         parent_phone: student.parent_phone || "",
+        parent_birthdate: student.parent_birthdate || "",
         address: student.address || "",
         class: student.class || "",
         major: student.major || "",
@@ -50,8 +52,11 @@ export default function Edit({ student }: Props) {
                         Kembali
                     </Link>
                 </div>
+
                 <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-neutral-900 p-8 shadow-sm">
                     <form onSubmit={submit} className="space-y-8">
+
+                        {/* Nama */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                             <div className="md:col-span-1">
                                 <label
@@ -79,6 +84,35 @@ export default function Edit({ student }: Props) {
                             </div>
                         </div>
 
+                        {/* NISN */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+                            <div className="md:col-span-1">
+                                <label
+                                    htmlFor="nisn"
+                                    className="text-sm font-medium text-gray-700 dark:text-gray-200"
+                                >
+                                    NISN
+                                </label>
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                    Nomor Induk Siswa Nasional.
+                                </p>
+                            </div>
+                            <div className="md:col-span-2">
+                                <input
+                                    type="text"
+                                    id="nisn"
+                                    value={data.nisn}
+                                    onChange={(e) => setData("nisn", e.target.value)}
+                                    className="w-full rounded-md border border-gray-300 dark:border-gray-700 dark:bg-neutral-800 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 transition"
+                                    placeholder="Masukkan NISN"
+                                />
+                                {errors.nisn && (
+                                    <span className="text-xs text-red-600 mt-1">{errors.nisn}</span>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Email */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                             <div className="md:col-span-1">
                                 <label
@@ -108,6 +142,7 @@ export default function Edit({ student }: Props) {
 
                         <hr className="border-gray-200 dark:border-gray-700" />
 
+                        {/* Akademik */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                             <div className="md:col-span-1">
                                 <label
@@ -120,6 +155,7 @@ export default function Edit({ student }: Props) {
                                     Informasi kelas dan jurusan siswa.
                                 </p>
                             </div>
+
                             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label htmlFor="class" className="text-sm font-medium text-gray-700 dark:text-gray-200 md:hidden mb-1 block">Kelas</label>
@@ -146,6 +182,7 @@ export default function Edit({ student }: Props) {
                             </div>
                         </div>
 
+                        {/* Kontak & Alamat */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                             <div className="md:col-span-1">
                                 <label
@@ -158,6 +195,7 @@ export default function Edit({ student }: Props) {
                                     Kontak orang tua dan alamat siswa.
                                 </p>
                             </div>
+
                             <div className="md:col-span-2 space-y-4">
                                 <div>
                                     <label htmlFor="parent_phone" className="text-sm font-medium text-gray-700 dark:text-gray-200 md:hidden mb-1 block">Nomor Orang Tua</label>
@@ -170,6 +208,22 @@ export default function Edit({ student }: Props) {
                                         placeholder="08..."
                                     />
                                 </div>
+
+                                {/* Parent Birthdate */}
+                                <div>
+                                    <label htmlFor="parent_birthdate" className="text-sm font-medium text-gray-700 dark:text-gray-200 md:hidden mb-1 block">Tanggal Lahir Orang Tua</label>
+                                    <input
+                                        type="date"
+                                        id="parent_birthdate"
+                                        value={data.parent_birthdate}
+                                        onChange={(e) => setData("parent_birthdate", e.target.value)}
+                                        className="w-full rounded-md border border-gray-300 dark:border-gray-700 dark:bg-neutral-800 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 transition"
+                                    />
+                                    {errors.parent_birthdate && (
+                                        <span className="text-xs text-red-600 mt-1">{errors.parent_birthdate}</span>
+                                    )}
+                                </div>
+
                                 <div>
                                     <label htmlFor="address" className="text-sm font-medium text-gray-700 dark:text-gray-200 md:hidden mb-1 block">Alamat</label>
                                     <input
@@ -183,7 +237,10 @@ export default function Edit({ student }: Props) {
                                 </div>
                             </div>
                         </div>
+
                         <hr className="border-gray-200 dark:border-gray-700" />
+
+                        {/* Status */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                             <div className="md:col-span-1">
                                 <label className="text-sm font-medium text-gray-700 dark:text-gray-200">

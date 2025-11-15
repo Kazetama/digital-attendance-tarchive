@@ -19,6 +19,8 @@ class Student extends Model
         'major',
         'email',
         'is_active',
+        'nisn',
+        'parent_birthdate',
     ];
 
     public function attendanceLogs()

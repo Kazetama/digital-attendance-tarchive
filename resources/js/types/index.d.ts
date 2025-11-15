@@ -45,11 +45,13 @@ export interface User {
 interface Student {
     id: number;
     uid_card: string;
+    nisn?: string; // tambah nisn
     name: string;
     email: string;
     class: string;
     major: string;
     parent_phone: string;
+    parent_birthdate?: string; // tambah tanggal lahir orang tua
     address: string;
     image?: string;
     is_active: boolean;

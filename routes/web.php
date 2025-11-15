@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\Admin\DataStudentController;
 use App\Http\Controllers\Admin\AttendanceSettingController;
+use App\Http\Controllers\Admin\AttendanceReportController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
@@ -18,6 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('admin/students', DataStudentController::class)->names('admin.students');
+    Route::get('/attendance/groups', [AttendanceReportController::class, 'index']);
+    Route::get('/attendance/groups/{major}/{class}', [AttendanceReportController::class, 'showGroup']);
 });
 
 require __DIR__.'/settings.php';

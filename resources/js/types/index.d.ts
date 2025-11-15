@@ -55,3 +55,17 @@ interface Student {
     is_active: boolean;
 }
 
+interface Group {
+    major: string;
+    class: string;
+}
+
+interface StudentLog {
+    id: number;
+    name: string;
+    class: string;
+    major: string;
+    status: string;
+    type: string | null;
+    scanned_at: string | null;
+}

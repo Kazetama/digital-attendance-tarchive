@@ -6,6 +6,19 @@ import { type BreadcrumbItem } from "@/types";
 import { Search, Edit, UserX, Trash } from "lucide-react";
 import { type Student } from "@/types";
 
+// Shadcn Alert Dialog
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 interface PageProps {
     students: {
         data: Student[];
@@ -25,10 +38,18 @@ export default function Index({ students, filters }: PageProps) {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        router.get(`/admin/students`, { search }, {
-            preserveState: true,
-            replace: true,
-        });
+        router.get(
+            `/admin/students`,
+            { search },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    };
+
+    const handleDelete = (id: number) => {
+        router.delete(`/admin/students/${id}`);
     };
 
     return (
@@ -101,10 +122,11 @@ export default function Index({ students, filters }: PageProps) {
 
                                             <td className="p-4">
                                                 <span
-                                                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${s.is_active
-                                                        ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200"
-                                                        : "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200"
-                                                        }`}
+                                                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                                        s.is_active
+                                                            ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200"
+                                                            : "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200"
+                                                    }`}
                                                 >
                                                     {s.is_active ? "Aktif" : "Nonaktif"}
                                                 </span>
@@ -123,35 +145,46 @@ export default function Index({ students, filters }: PageProps) {
                                                     Edit
                                                 </Link>
 
-                                                <form
-                                                    onSubmit={(e) => {
-                                                        e.preventDefault();
-                                                        if (confirm(`Yakin mau hapus data ${s.name}?`)) {
-                                                            router.delete(`/admin/students/${s.id}`);
-                                                        }
-                                                    }}
-                                                >
-                                                    <button
-                                                        type="submit"
-                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md
-                                                                   bg-red-600 dark:bg-red-700
-                                                                   text-white
-                                                                   text-xs font-medium
-                                                                   hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
-                                                    >
-                                                        <Trash className="h-3 w-3" />
-                                                        Hapus
-                                                    </button>
-                                                </form>
+                                                {/* Delete Button with Dialog */}
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        <button
+                                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md
+                                                                       bg-red-600 dark:bg-red-700
+                                                                       text-white text-xs font-medium
+                                                                       hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
+                                                        >
+                                                            <Trash className="h-3 w-3" />
+                                                            Hapus
+                                                        </button>
+                                                    </AlertDialogTrigger>
+
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>Hapus Siswa</AlertDialogTitle>
+                                                            <AlertDialogDescription>
+                                                                Yakin mau menghapus siswa {s.name}? Tindakan ini tidak bisa dibatalkan.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>Batal</AlertDialogCancel>
+
+                                                            <AlertDialogAction
+                                                                onClick={() => handleDelete(s.id)}
+                                                                className="bg-red-600 hover:bg-red-700 text-white"
+                                                            >
+                                                                Hapus
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
                                             </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td
-                                            colSpan={7}
-                                            className="text-center p-16 bg-white dark:bg-neutral-900"
-                                        >
+                                        <td colSpan={7} className="text-center p-16 bg-white dark:bg-neutral-900">
                                             <div className="flex flex-col items-center justify-center gap-3">
                                                 <UserX className="h-12 w-12 text-neutral-400 dark:text-neutral-600" />
                                                 <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-200">
